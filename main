@@ -1,166 +1,735 @@
-\documentclass[10pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage[french]{babel}
-\usepackage[latin1]{inputenc}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{soul}
-\usepackage{sectsty}
-\usepackage{algorithm}
-\usepackage{setspace}
-\usepackage[T1]{fontenc}
-\usepackage[top=4cm,bottom=4cm,left=2cm,right=2cm]{geometry}
-\usepackage{color}
-\begin{document}
-\section{\color{blue}{{introduction générale}}}
 
-A ces jours, il est universellement admis que les mathématiques jouent un rôle fondamental dans le
-développement de notre vie et dans le progrès réalisé par l'humanité, notamment en physique, sciences
-sociales, gestion ou informatique. Cependant, pour nombre d'étudiants, les mathématiques ne rendent pas\\ toujours la vie plus facile. Cela s'explique par le fait qu'ils s'attardent à voir le côté complexité de calcul, au lieu d'admirer ce qui constitue sa beauté : le raisonnement mathématique. Ce manuel n'a pas l'objectif de ne mettre en évidence que la complexité de calculs mathématiques mais surtout la prééminence du raisonnement mathématique (raisonnement logique et rigoureux) sur la compréhension des méthodes appliquées en recherche qui elle est une approche quantitative permettant de produire de
-Meilleures décisions. Elle fournit des outils pour rationaliser, simuler et optimiser
-L'architecture et le fonctionnement des systèmes industriels et économiques. Elle propose des
-modèles pour analyser des situations complexes et permet aux décideurs de faire des choix
-Efficaces et robustes.  Un langage simple et simplifié a été adopté, à cet effet, afin de permettre à l'étudiant d'appréhender les méthodes et techniques de résolution utilisées dans cette discipline.
-Aujourd'hui parmi les principaux problèmes de la  recherche opérationnelle  qui touche les entreprises notamment le marché industriel  est le problème de transport qui est l'un des problèmes majeurs qui pénalisent financièrement et économiquement l'industrie. Cependant cette étude a pour objectif de trouver une solution a ce problèmes de gestion de cout de transport dans une entreprise ou autre cela dépendra du type et du contexte de ce problème. Aussi cette thématique est aussi adressée au compagnie de transport  En effet, ce qui est un problème de transport pour une entreprise constitue en même temps le marché des compagnies de transport. 
-En résumé, les problèmes de transport peuvent être définis d'une part au sein des entreprises, comme la recherche d'un coût de transport minimum au moyen de modifications des caractères de la marchandise et de choix de moyens de transports appropriés, et d'autre part, au sein des compagnies de transport, comme la recherche des marchandises avantageuses à transporter pour leur clients. Quant aux problèmes d'implantations, il s'agit d'une part, pour les entreprises de savoir où s'implanter pour réduire leurs coûts de transports, et d'autre part, pour les compagnies de transport et autres organismes, de savoir quels types d'entreprises il faut attirer dans leur zone géographique d'activités.
-Dans notre travail nous allons étudier, analyser et trouver un meilleur moyen pour résoudre ce problème après avoir établi un plan d'action associée  qui peu être traduit comme suit : 
-\begin{itemize}
-\item Concevoir l'unité de marchandise à transporter pour qu'il en résulte un coût de transport global minimum, le moyen de transport étant invariable. Cela consiste à modifier les quatre caractères d'une marchandise: poids total, spécificité (forme, aspect), valeur et productivité; ou plus généralement, à étudier les fonctions qui relient ces caractères à chaque élément du coût de transport, 
-Choisir le moyen de transport qui produise le coût de transport minimal d'une marchandise donnée, Combiner les deux actions précédentes,
- c'est à dire faire varier à la fois les caractères de la marchandise et les moyens de transport car Si un client a besoin d'une quantité bien déterminée d'un produit, et dans des dates bien déterminées sur un horizon de temps fini, le producteur doit respecter ces dates, et les conditions imposées par le client. Une synchronisation doit se faire tout au long de la chaine logistique de la production au transport.
-\end{itemize}
-Ce mémoire est constitué de trois chapitres. Dans le premier chapitre, on présente quelques définitions des concepts de base sur le problème de transport, en commençant par quelques définitions importantes sur la recherche opérationnelle, le problème donné, passant par les notions de base importantes pour la résolution. On termine avec une formulation mathématique du problème transport.
- Le second chapitre présente la description de la résolution  de la structure étudiée à l'aide de  l'algorithme de SIMPLEXE ainsi qu'avec d'autres méthodes comme la méthode STEPPING STONE , COIN NORD OUEST  .
- Le dernier chapitre contient l'application des méthodes étudiées sur un problème conquêt   du le langage de programmation  c++ et le solveur  CPLEX . Et enfin on termine par une conclusion générale et des perspectives.
-\part{chapitre 1 : notions de base}
-\textbf{\underline{introduction}}:
-Ce chapitre est consacré aux rappels importants et aux définitions de bases et des points généraux de l'optimisation et de la programmation linéaire qu’on utilisera par la suite pour la résolution du problème de transport.
-\section{Généralités et définitions}
-\subsection{La recherche opérationnelle}\subsubsection{les origines de la recherche opérationnelle (RO) }
-La véritable  naissance de la Recherche Opérationnelle a eu lieu pendant la seconde guerre mondiale. Elle portait l'appellation « Operationnal research » (en Anglais) et Patrick Maynard Stuart Blackett sont les fondateur de cette discipline. En effet la recherche opérationnelle est une démarche qui implique habituellement le traitement mathématique d'un procédé, d'un problème ou d'une opération pour en déterminer le but et l'efficacité et pour atteindre l'efficacité maximale.
-Et d'après le dictionnaire de l'informatique du Larousse en 1996 : « Science de la préparation des décisions qui procède de la mathématisation des facteurs essentiels entrant en jeu dans les problème d'organisation militaire, économique, industrielle, afin de clarifier les données  motivant une décision.
-La recherche opérationnelle n'est qu'un des outils d'analyse utilisés en science économique. A cet effet, elle permet d'assigner de manière efficace les ressources ou activités dans la gestion et l'organisation des systèmes complexes. A ce titre, la Recherche opérationnelle ne peut qu'intéresser les économistes étant donné que l'économie se définit comme une discipline des sciences sociales ayant pour objet d'étude l'allocation optimale des ressources rares et limitées à des fins multiples et concurrentes de production et de consommation.
-La croissance importante de l'industrie d'après-guerre entraîna des problèmes, causés par la complexité croissante et la spécialisation dans les organisations, problèmes en fait proches de ceux présent lors du conflit. Au début des années 1950’s, la RO avait pénétré une multitude d'organisations commerciales, industrielles, et gouvernementales. Et ce n'était que le début. Au moins deux autres facteurs ont joué un rôle clé dans la croissance rapide de la RO. Tout d'abord, des progrès substantiels ont été obtenus très tôt afin d'améliorer les techniques de RO. Ces techniques, dans leur mise en pratique, furent soutenues par l'essor des outils informatiques.
-\subsubsection{Caractéristiques de la RO}
-Une caractéristique additionnelle est que la RO essaye souvent de trouver une meilleure solution (dite solution optimale) pour le problème examiné. Cette solution peut ne pas être unique. Cette recherche d'optimalité est un thème important en RO, mais si son interprétation en terme manageriels peut être délicate. Il est difficile pour un individu de pouvoir maîtrise tous les aspects du problèmes à l'étude, de sorte que la RO est généralement plus un travail d'équipe, avec des experts en mathématiques, statistiques et probabilités, ingénierie, économie, administration, informatique, physiques, sciences comportementales, et les techniques spécifiques de la RO.
-La recherche opérationnelle (RO) applique la méthode scientifique à la gestion des systèmes organisés dans les entreprises, l'industrie, le gouvernement et d'autres entreprises. Où est régulièrement appliqué dans des domaines tels que:
-\begin{itemize}\renewcommand{\labelitemi}{$\diamond$}
-\item 	gestion de la chaîne logistique et systèmes de marketing et de gestion des revenus.
-\item usines de fabrication et ingénierie financière.
-\item réseaux de télécommunication.
-\item réseaux de transport et l'énergie et l'environnement.
-\item la gestion des soins de .
-\item commerce web et défense militaire.
-\item système de service .
-\end{itemize}
-Les analystes RO résolvent de tels problèmes de décision de gestion avec un éventail de méthodologies mathématiques ,pour ce faire, les professionnels OR représentent d'abord le système sous forme mathématique. Plutôt que d'utiliser des essais et erreurs sur le système lui-même, ils construisent un modèle algébrique du système, puis manipulent ou résolvent le modèle, en utilisant des ordinateurs, pour prendre les meilleures décisions. Souvent motivés par de nouveaux problèmes de décision, les chercheurs en RO s'efforcent d'améliorer et d'élargir les méthodologies applicables.
-\subsubsection{Objectif de la RO }
-apprendre à modéliser les problèmes réels et à résoudre les programmes linéaires suivant une méthodologie appropriée comme suit :
-\begin{enumerate}
-\item Les étapes les plus importantes sont la définition du problème (suppose un dialogue avec le décideur) et la construction du modèle (prendre conscience des hypothèses simplificatrices et de leur impact).
-\item La phase de validation doit permettre de remettre en cause la validité du modèle.
-\item Une approche globale nécessite donc un aller-retour constant entre le modèle et les attentes du décideur.
-\end{enumerate}
-\ul{remarque}
-De nombreux problèmes réels  peuvent être exprimes  comme des programmes linéaires d’autres problèmes aussi peuvent être exprimé comme programme non linéaire et aussi faire une optimisation dans les réseaux dans le cas de la schématisation par graphes et la programmes linéaires peuvent être résolus efficacement par certains algorithmes.
-\subsection{optimisation linéaire et programme linéaire :}
-\subsubsection{Optimisation linéaire}
-En optimisation mathématique, un problème d'optimisation linéaire demande de minimiser une fonction linéaire sur un polyèdre convexe. La fonction que l'on minimise ainsi que les contraintes sont décrites par des fonctions linéaires, d'où le nom donné à ces problèmes. L'optimisation linéaire (OL) est la discipline qui étudie ces problèmes. Elle est également désignée par le nom de programmation linéaire, terme introduit par George Dantzig vers 19472, mais cette appellation tend à être abandonnée à cause de la confusion possible avec la notion de programmation informatique.
-L'objectif de la programmation linéaire (P.L.) est de trouver la valeur optimale d'une fonction linéaire sous un système d'équations d'inégalités de contraintes linéaires. La fonction à optimiser est baptisée "fonction économique"(fonction objectif).
-\subsubsection{Programme linéaire ( pl) }
-La programmation linéaire est un outil très puissant de la recherche opérationnelle. C'est un outil générique qui peut résoudre un grand nombre de problèmes. En effet, une fois un problème modélise sous la forme d'équations linéaires, des méthodes assurent la résolution du problème de manière exacte.   On distingue dans la programmation linéaire, la programmation linéaire en nombres réels, pour laquelle les variables des équations sont dans IR+ et la programmation en nombres entiers, pour laquelle les variables sont dans IN. Bien entendu, il est possible d'avoir les deux en même temps. est un programme mathématique qui  contient deux  parties une fonction objectif à maximiser ou à minimiser qui doit être linéaire et un ensemble de contraintes à satisfaire qui sont écrites sous forme linéaire aussi. 
-\subsubsection{La structure générale d’un programme linéaire (PL): }
-\textbf{fonction objectif}: cette fonction assigne une valeur à chaque configuration différente. Le terme "objectif" vient du fait que l'objectif est d'optimiser cette fonction.\\
-\textbf{variables}: elles représentent les composantes du modèle qui peuvent être modifiées pour créer des configurations différentes elle est considérée comme l'étape la plus importante .\\
-\textbf{contraintes}: on appelle les contraintes du problème toutes les relation limitant le choix des valeurs possibles  des variables .  Ces relation peuvent être  de simple borne sur les variables et elles peuvent être  complexe en d'autre terme elles représentent les limitations sur les variables.\\
-\subsection{Forme matricielles classiques et conventions} :
-notons par:
-\begin{itemize}
-\item $ x=(x_1,x_2,...,x_n)^t $ le vecteur des variables choisies.\\
-\item $ b=(b_1,b_2,...,b_m)^t $ le second membre des contraintes.\\
-\item $ c=(c_1,c_2,...,c_n)^t $ le vecteur coût ou profit associé aux variables et A la matrice m * n de coefficient $a_{ij}$.\\
-\end{itemize}
-\subsubsection{Définitions importantes}
-\textbf{\underline{définition 1}}: on appelle problème d'optimisation linéaire sous forme standard un problème de la forme :
- $ max z = \sum_{j=1}^{n}c_{j}x_{j} $\\
- sous les contraintes : $ \sum_{j=1}^{n}a_{ij}x_{j}= b_i $ , $ \forall (i=1,…,m)$.\\
-$ x_j\geq 0 $ , $\forall (j=1,...,n)$ où m,n $  \in \mathbb {N}$.\\
-En d'autre terme on aura a écrire le PL sous forme :
-$ max z= c^{t}x $ \\
-sous les contraintes: $ Ax=b $ ou $x\geq 0$.\\
-\textbf{\underline{définition 2}}:
-on appelle problème d'optimisation sous forme canonique un problème de la forme :\\
- $ max z = \sum_{j=1}^{n}c_{j}x_{j} $\\ .
- sous les contraintes : $ \sum_{j=1}^{n}a_{ij}x_{j}\leq b_i $  , $\forall (i=1,…,m)$.\\
-$ x_j\geq 0 $ , $\forall (j=1,...,n)$. ou m,n $\in \mathbb {N}$.\\
-en d'autre terme :
-$$ max z= c^{t}x $$ \\
-sous les contraintes: $ Ax\leq b $ ou$ x\geq 0$.\\
-\textbf{remarque}:\\
-\begin{itemize}\renewcommand{\labelitemi}{$\diamond$}
-\item le PL sous forme standard avec des contraintes d'égalité s'utilise dans la résolution algébrique. \\ 
-Soit A une m * n matrice, b un m-vecteur colonne et un n-vecteur ligne.\\
-On appelle base d'un PL ou d'un système $$ Ax=b $$ un ensemble J $\subseteq  {1,...,n}$ d'indices de colonnes tel que $A^j$ soit carrée régulière . \\
-\item $A^j$ est dit matrice de base associée a J.
-\item Les indices j sont de base si $j \in J$ et hors base si j$ \in  \overline{J}$.
-\item La solution associée a la base J est appelée solution de base associée de J.
-\item Le système associée a la base J est : $$x_{j}=(A^{j})^{-1}b x_{\overline{j}}$$.
-\end{itemize}.
-\\
-\textbf{\underline{Définition 3}}:\\
-\textbf{solution admissible ou réalisable} : est une solution qui satisfait toutes les contraintes.\\
-\\
-\textbf{\underline{Définition 4}}:\\
-\textbf{domaine D réalisable} : défini par un ensemble d'équation ou d'inéquation linéaire appelées contraintes .Chaque contraintes définit un demi-espace admissible , l'intersection  de tous les demi-espace admissibles constitue le domaine D réalisable.\\
-\\
-\textbf{\underline{Définition 5}}:\\
-\textbf{une solution optimal} est une solution admissible (réalisable) qui  optimise la fonction objectif  c.à.d :
-\begin{enumerate}
-\item Cas de maximisation : $\overline{x}$ optimal : $\forall x\in D $ z($\overline{x}$)$\geq$ z(x).
-\item cas de minimisation : $\overline{x}$ optimal : $\forall x\in D $ z($\overline{x}$)$\leq$ z(x).
-\end{enumerate}.
-\\
-\textbf{\underline{Définition6}}:\\
-\textbf{Les Variables d'écarts}: La variable  déécart est la quantité qui ajoutée au membre de gauche d'une contrainte, permet de transforme la contrainte en égalité.\\
-\\
-\textbf{\underline{Définition7}}:\\
-\textbf{ Variable de base et les variables hors base }:on appelle les variables de base les n variables de  $\mathbb{R}^{n+m}$ fixée a zéro , et les m variables restantes sont  appelés   variables de base.\\ 
-•\textbf{Solution  de base }:on appelle solution de base une solution ou en ayant choisi n variable hors base  on obtient une solution unique en résolvant les m contraintes d'égalités obtenues en ajoutant les variables d'écarts $ (x_j)$.\\
-•\textbf{de base réalisable }:une solution de base qui en plus vérifie les contraintes de positivités en d'autre terme une solution de base associée à une base réalisable est dite solution de base réalisable. \\
-\\
-\textbf{\underline {Définition8}}: la  solution de base associée à la base J  du programme linéaire  écrit sous forme canonique par rapport a la base J est  dite dégénérée si une composant au moins  $x_j$ est nulle c'est-à-dire  si le vecteur $ (A^j)^{-1}*b$ n'est pas strictement positive .\\
-\\
-\textbf{\underline{Définition9}}:: un  PL est dit écrit sous forme canonique par rapport a la base J si les conditions suivantes sont vérifiées :\\
-\begin{enumerate}
-\item $A_j$ est une matrice  a une permutation  prés de colonnes de la matrice unité.
-\item le vecteur $c^J=0$.
-\item \textbf{Algorithme de pivotage }:\\
-\textbf{début}\\
-\begin{tabular}{{|c}}\\
-  (données : m , n , r , s ; données : A)\\
-/*  A : est une  m * n  matrice ;     $ 1 \leq r \leq m $ .\\
-/* $A^{r}_{s} \neq \emptyset$*/.\\
-/* s :  la ligne de pivot */\\
-pour $j=1...n$ faire \\
-\begin{tabular}{|c}\\
-$ A^{j}_{r} := A^{j}_{r}/A^{s}_{r}$. $A_r:=A_r/A^{s}_{r}$.\\
-finpour.\\
-\end{tabular} \\
-pour $i=1...m $ $i\neq r$ faire\\
-\begin{tabular}{{|c}}\\
-pour$j=1...n$ faire\\
-\begin{tabular}{|c}
-$A^{j}_{i} := A^{j}_{i}-A^{s}_{i}*A^{j}_{r}$;  [$A_{i}:=A_{i}-A^{s}_{i}*A_{r}$].\\
-finpour\\
-\end{tabular}.\\
-finpour.\\
-\end{tabular}.\\
-\\
-\\
-\end{tabular}\\
-\textbf{fin}.
-\end{enumerate}
-\end{document}
+
+
+130  bin/initdev.c
+@@ -0,0 +1,130 @@
++#include <stdio.h>
++
++#ifdef __linux__
++    #include <unistd.h>
++    #include <sys/types.h>
++    #include <sys/stat.h>
++    #define LICENSE "LICENSE"
++    #define MAKEFILE "Makfile"
++#endif
++
++#ifdef __WIN32
++    #include <Windows.h>
++    #include <WinBase.h>
++
++    int createDirAndFilesWindows(char *languageType, char *projectName){
++        char currentDir[256];
++        GetCurrentDirectory(sizeof(currentDir), currentDir);
++        strcat(currentDir, "\\");
++        strcat(currentDir, projectName);
++
++        if(CreateDirectory(currentDir, NULL) == 0){
++            printf("Failed to create directory");
++            return 1;
++        }// TODO: Include details of failure 
++
++        // There is another proper way to do it :-)
++
++        char main[512];
++        char license[512];
++        char makefile[512];
++
++        strncpy(main, currentDir, sizeof(currentDir));
++        strncpy(license, currentDir, sizeof(currentDir));
++        strncpy(makefile, currentDir, sizeof(currentDir));
++
++        if (strcmp(languageType, "-C") == 0) {strcat(main, "\\main.c");}
++        else if (strcmp(languageType, "-Py") == 0) {strcat(main, "\\main.py");}
++        else if (strcmp(languageType, "-Latex") == 0) {strcat(main, "\\main.tex");}
++        else if (strcmp(languageType, "-CPP") == 0) {strcat(main, "\\main.cpp");}
++        else if (strcmp(languageType, "-C++")) {strcat(main, "\\main.cpp");}
++        else if (strcmp(languageType, "-BEAMER") == 0) {strcat(main, "\\main.tex");}
++        else strcat(main, "\\main");
++        
++        strcat(license, "\\LICENSE");
++        strcat(makefile, "\\Makefile");
++
++        HANDLE hMain = CreateFile((LPCSTR)main,
++                                    GENERIC_READ | GENERIC_WRITE,
++                                    0,
++                                    NULL,
++                                    1, //Create new file if the a file with a same name exists
++                                    FILE_ATTRIBUTE_NORMAL,
++                                    NULL);
++
++        HANDLE hLicense = CreateFile((LPCSTR)license,
++                                    GENERIC_READ | GENERIC_WRITE,
++                                    0,
++                                    NULL,
++                                    1, //Create new file if the a file with a same name exists
++                                    FILE_ATTRIBUTE_NORMAL,
++                                    NULL);
++        /* Create a license */    
++        //TODO: Copy the appropriate License Terms to LICENSE FILE..
++
++        BYTE buffer[1024 * 50];
++        DWORD nNumberofBytesWritten;
++        if  (strcmp(languageType, "-GPL") == 0){
++            //Garbage to test
++            //strncpy(licenseText, "This program is free software: you can redistribute it and/or modify\rit under the terms of the GNU General Public License as published bythe Free Software Foundation, version 3.\n\rThis program is distributed in the hope that it will be useful, but\nWITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU\rGeneral Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see \n\n", sizeof(licenseText));
++        } else if (strcmp(languageType, "-MIT") == 0){
++            //Garbage to test
++            //strncpy(licenseText, "The MIT License\n\nCopyright \n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files, to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n", sizeof(licenseText));
++        }
++        
++
++        /* Makefile creation */
++        HANDLE hMakefile = CreateFile((LPCSTR)makefile,
++                                    GENERIC_READ | GENERIC_WRITE,
++                                    0,
++                                    NULL,
++                                    1, //Create new file if the a file with a same name exists
++                                    FILE_ATTRIBUTE_NORMAL,
++                                    NULL);
++        return 0;
++    }
++#endif
++
++
++int main(int argc, char **argv){
++    if (argc < 2){
++        printf("Expected arguments, please check the help: initdev -help \n");
++        return 1;
++    }
++    if (argc == 2){
++        if (strcmp(argv[1], "-help") == 0){
++                printf("Initdev: a developer tool that save time by setting up dev Directory\n");
++                printf("use: initdev <dev_source_name> [args]\n");
++                printf("args:\t\t  -C: C project\n");
++                printf("\t\t  -CPP or -C++: C++ project\n");
++                printf("\t\t  -Py: Python project\n");
++                printf("\t\t  -Latex: Latex project\n");
++                printf("\t\t  -BEAMER: BEAMER project\n");
++                return 0;
++        }
++        #ifdef __linux__
++            mkdir(argv[1], 0770);
++        #endif
++
++        #ifdef __WIN32
++            createDirAndFilesWindows(NULL, argv[1]);
++        #endif
++    }else if(argc == 3){
++        if (strcmp(argv[2],"-C") &&  
++            strcmp(argv[2],"-CPP") &&
++            strcmp(argv[2],"-C++") &&
++            strcmp(argv[2],"-Py") &&
++            strcmp(argv[2],"-Latex") &&
++            strcmp(argv[2],"-BEAMER") &&
++            strcmp(argv[2],"-GPL") &&
++            strcmp(argv[2],"-MIT"))
++        {
++                printf("Uknown arguments, please check the help: initdev -help");
++                return 1;
++        }
++        createDirAndFilesWindows(argv[2], argv[1]);
++    }
++    //TODO: Handle initdev with 4 args.
++    
++    return 0;
++} 
+  
+52  gitignores/c
+@@ -0,0 +1,52 @@
++# Prerequisites
++*.d
++
++# Object files
++*.o
++*.ko
++*.obj
++*.elf
++
++# Linker output
++*.ilk
++*.map
++*.exp
++
++# Precompiled Headers
++*.gch
++*.pch
++
++# Libraries
++*.lib
++*.a
++*.la
++*.lo
++
++# Shared objects (inc. Windows DLLs)
++*.dll
++*.so
++*.so.*
++*.dylib
++
++# Executables
++*.exe
++*.out
++*.app
++*.i*86
++*.x86_64
++*.hex
++
++# Debug files
++*.dSYM/
++*.su
++*.idb
++*.pdb
++
++# Kernel Module Compile Results
++*.mod*
++*.cmd
++.tmp_versions/
++modules.order
++Module.symvers
++Mkfile.old
++dkms.conf
+  
+32  gitignores/cpp
+@@ -0,0 +1,32 @@
++# Prerequisites
++*.d
++
++# Compiled Object files
++*.slo
++*.lo
++*.o
++*.obj
++
++# Precompiled Headers
++*.gch
++*.pch
++
++# Compiled Dynamic libraries
++*.so
++*.dylib
++*.dll
++
++# Fortran module files
++*.mod
++*.smod
++
++# Compiled Static libraries
++*.lai
++*.la
++*.a
++*.lib
++
++# Executables
++*.exe
++*.out
++*.app
+  
+83  gitignores/python
+@@ -0,0 +1,83 @@
++# Byte-compiled / optimized / DLL files
++__pycache__/
++*.py[cod]
++*$py.class
++
++# C extensions
++*.so
++
++# Distribution / packaging
++.Python
++env/
++build/
++develop-eggs/
++dist/
++downloads/
++eggs/
++.eggs/
++lib/
++lib64/
++parts/
++sdist/
++var/
++wheels/
++*.egg-info/
++.installed.cfg
++*.egg
++
++# PyInstaller
++#  Usually these files are written by a python script from a template
++#  before PyInstaller builds the exe, so as to inject date/other infos into it.
++*.manifest
++*.spec
++
++# Installer logs
++pip-log.txt
++pip-delete-this-directory.txt
++
++# Unit test / coverage reports
++htmlcov/
++.tox/
++.coverage
++.coverage.*
++.cache
++nosetests.xml
++coverage.xml
++*.cover
++.hypothesis/
++
++# Translations
++*.mo
++*.pot
++
++# Django stuff:
++*.log
++local_settings.py
++
++# Flask stuff:
++instance/
++.webassets-cache
++
++# Scrapy stuff:
++.scrapy
++
++# Sphinx documentation
++docs/_build/
++
++# PyBuilder
++target/
++
++# Jupyter Notebook
++.ipynb_checkpoints
++
++# pyenv
++.python-version
++
++# celery beat schedule file
++celerybeat-schedule
++
++# SageMath parsed files
++*.sage.py
++
++# dotenv
++.env
+  
+220  gitignores/tex
+@@ -0,0 +1,220 @@
++## Core latex/pdflatex auxiliary files:
++*.aux
++*.lof
++*.log
++*.lot
++*.fls
++*.out
++*.toc
++*.fmt
++*.fot
++*.cb
++*.cb2
++
++## Intermediate documents:
++*.dvi
++*-converted-to.*
++# these rules might exclude image files for figures etc.
++# *.ps
++# *.eps
++# *.pdf
++
++## Generated if empty string is given at "Please type another file name for output:"
++*.pdf
++*.listing
++## Bibliography auxiliary files (bibtex/biblatex/biber):
++*.bbl
++*.bcf
++*.blg
++*-blx.aux
++*-blx.bib
++*.run.xml
++
++## Build tool auxiliary files:
++*.fdb_latexmk
++*.synctex
++*.synctex(busy)
++*.synctex.gz
++*.synctex.gz(busy)
++*.pdfsync
++
++## Auxiliary and intermediate files from other packages:
++# algorithms
++*.alg
++*.loa
++
++# achemso
++acs-*.bib
++
++# amsthm
++*.thm
++
++# beamer
++*.nav
++*.pre
++*.snm
++*.vrb
++
++# changes
++*.soc
++
++# cprotect
++*.cpt
++
++# elsarticle (documentclass of Elsevier journals)
++*.spl
++
++# endnotes
++*.ent
++
++# fixme
++*.lox
++
++# feynmf/feynmp
++*.mf
++*.mp
++*.t[1-9]
++*.t[1-9][0-9]
++*.tfm
++
++#(r)(e)ledmac/(r)(e)ledpar
++*.end
++*.?end
++*.[1-9]
++*.[1-9][0-9]
++*.[1-9][0-9][0-9]
++*.[1-9]R
++*.[1-9][0-9]R
++*.[1-9][0-9][0-9]R
++*.eledsec[1-9]
++*.eledsec[1-9]R
++*.eledsec[1-9][0-9]
++*.eledsec[1-9][0-9]R
++*.eledsec[1-9][0-9][0-9]
++*.eledsec[1-9][0-9][0-9]R
++
++# glossaries
++*.acn
++*.acr
++*.glg
++*.glo
++*.gls
++*.glsdefs
++
++# gnuplottex
++*-gnuplottex-*
++
++# gregoriotex
++*.gaux
++*.gtex
++
++# hyperref
++*.brf
++
++# knitr
++*-concordance.tex
++# TODO Comment the next line if you want to keep your tikz graphics files
++*.tikz
++*-tikzDictionary
++
++# listings
++*.lol
++
++# makeidx
++*.idx
++*.ilg
++*.ind
++*.ist
++
++# minitoc
++*.maf
++*.mlf
++*.mlt
++*.mtc[0-9]*
++*.slf[0-9]*
++*.slt[0-9]*
++*.stc[0-9]*
++
++# minted
++_minted*
++*.pyg
++
++# morewrites
++*.mw
++
++# nomencl
++*.nlo
++
++# pax
++*.pax
++
++# pdfpcnotes
++*.pdfpc
++
++# sagetex
++*.sagetex.sage
++*.sagetex.py
++*.sagetex.scmd
++
++# scrwfile
++*.wrt
++
++# sympy
++*.sout
++*.sympy
++sympy-plots-for-*.tex/
++
++# pdfcomment
++*.upa
++*.upb
++
++# pythontex
++*.pytxcode
++pythontex-files-*/
++
++# thmtools
++*.loe
++
++# TikZ & PGF
++*.dpth
++*.md5
++*.auxlock
++
++# todonotes
++*.tdo
++
++# easy-todo
++*.lod
++
++# xindy
++*.xdy
++
++# xypic precompiled matrices
++*.xyc
++
++# endfloat
++*.ttt
++*.fff
++
++# Latexian
++TSWLatexianTemp*
++
++## Editors:
++# WinEdt
++*.bak
++*.sav
++
++# Texpad
++.texpadtmp
++
++# Kile
++*.backup
++
++# KBibTeX
++*~[0-9]*
++
++# auto folder when using emacs and auctex
++/auto/*
++
++# expex forward references with \gathertags
++*-tags.tex
+  
+674  licenses/GPL
+Large diffs are not rendered by default.
+
+  
+21  licenses/MIT
+@@ -0,0 +1,21 @@
++MIT License
++
++Copyright (c) 2018 bimade
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++SOFTWARE.
+  
+116  sources/beamer.tex
+@@ -0,0 +1,116 @@
++
++
++% This text is proprietary.
++% It's a part of presentation made by myself.
++% It may not used commercial.
++% The noncommercial use such as private and study is free
++% Sep. 2005 
++% Author: Sascha Frank 
++% University Freiburg 
++% www.informatik.uni-freiburg.de/~frank/
++
++
++\documentclass{beamer}
++\begin{document}
++\title{Simple Beamer Class}   
++\author{Sascha Frank} 
++\date{\today} 
++
++\frame{\titlepage} 
++
++\frame{\frametitle{Table of contents}\tableofcontents} 
++
++
++\section{Section no.1} 
++\frame{\frametitle{Title} 
++Each frame should have a title.
++}
++\subsection{Subsection no.1.1  }
++\frame{ 
++Without title somethink is missing. 
++}
++
++
++\section{Section no. 2} 
++\subsection{Lists I}
++\frame{\frametitle{unnumbered lists}
++\begin{itemize}
++\item Introduction to  \LaTeX  
++\item Course 2 
++\item Termpapers and presentations with \LaTeX 
++\item Beamer class
++\end{itemize} 
++}
++
++\frame{\frametitle{lists with pause}
++\begin{itemize}
++\item Introduction to  \LaTeX \pause 
++\item Course 2 \pause 
++\item Termpapers and presentations with \LaTeX \pause 
++\item Beamer class
++\end{itemize} 
++}
++
++\subsection{Lists II}
++\frame{\frametitle{numbered lists}
++\begin{enumerate}
++\item Introduction to  \LaTeX  
++\item Course 2 
++\item Termpapers and presentations with \LaTeX 
++\item Beamer class
++\end{enumerate}
++}
++\frame{\frametitle{numbered lists with pause}
++\begin{enumerate}
++\item Introduction to  \LaTeX \pause 
++\item Course 2 \pause 
++\item Termpapers and presentations with \LaTeX \pause 
++\item Beamer class
++\end{enumerate}
++}
++
++\section{Section no.3} 
++\subsection{Tables}
++\frame{\frametitle{Tables}
++\begin{tabular}{|c|c|c|}
++\hline
++\textbf{Date} & \textbf{Instructor} & \textbf{Title} \\
++\hline
++WS 04/05 & Sascha Frank & First steps with  \LaTeX  \\
++\hline
++SS 05 & Sascha Frank & \LaTeX \ Course serial \\
++\hline
++\end{tabular}}
++
++
++\frame{\frametitle{Tables with pause}
++\begin{tabular}{c c c}
++A & B & C \\ 
++\pause 
++1 & 2 & 3 \\  
++\pause 
++A & B & C \\ 
++\end{tabular} }
++
++
++\section{Section no. 4}
++\subsection{blocs}
++\frame{\frametitle{blocs}
++
++\begin{block}{title of the bloc}
++bloc text
++\end{block}
++
++\begin{exampleblock}{title of the bloc}
++bloc text
++\end{exampleblock}
++
++
++\begin{alertblock}{title of the bloc}
++bloc text
++\end{alertblock}
++}
++\end{document}
++
++%Sascha Frank
++%Last modified: Thu Oct 6 10:37:34 MEST 2005 
+  
+22  sources/latexMin.tex
+@@ -0,0 +1,22 @@
++\documentclass{article}
++    % General document formatting
++    \usepackage[margin=0.7in]{geometry}
++    \usepackage[parfill]{parskip}
++    \usepackage[utf8]{inputenc}
++    
++    % Related to math
++    \usepackage{amsmath,amssymb,amsfonts,amsthm}
++
++\begin{document}
++
++Name, date, Exercise X
++
++\section*{Part a}
++
++Put your answer to part a here
++
++\section*{Part b}
++
++etc
++
++\end{document}
+  
+8  sources/main.c
+@@ -0,0 +1,8 @@
++#include <stdio.h>
++#include <stdlib.h>
++
++int main()
++{
++    printf("Hello world!\n");
++    return 0;
++}
+  
+9  sources/main.cpp
+@@ -0,0 +1,9 @@
++#include <iostream>
++
++using namespace std;
++
++int main()
++{
++    cout << "Hello world!" << endl;
++    return 0;
++}
+
+ 
+            
+ 
+ 
+
