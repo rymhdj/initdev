@@ -1,0 +1,13 @@
+b1/bin/bash
+if ["$n==0"]
+then 
+echo expected arguments ,please chek the help : intuidev.help
+exit1
+file_license=$1
+mkdir projet;
+touch main.txt;
+touch license.txt;
+touch mikefile.txt;
+echo SRC= /"main"/;
+echo clean =makefile;
+exit 0;
